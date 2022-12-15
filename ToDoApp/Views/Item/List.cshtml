@@ -1,0 +1,31 @@
+﻿@model ItemEditViewModel
+
+<h2>List</h2>
+<div>
+    <a class="btn btn-dark" asp-controller="Item" asp-action="Edit">Create new Item</a>
+</div>
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type ="search" class="form-control" asp-for="SearchTerm"/>
+            <span class="input-group-btn">
+                <button class="btn btn-outline-dark">
+                    Search
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+
+@foreach (var item in Model.ListItems)
+{
+    <table>
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.DueDate</td>
+            <td>@item.CompletionStatus</td>
+        </tr>
+    </table>
+}                                   
