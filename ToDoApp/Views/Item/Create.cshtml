@@ -1,8 +1,8 @@
-﻿@model ToDoItem
+﻿@model ToDoApp.Models.ToDoItem;
 
-<h2>Edit</h2>
+<h2>Create</h2>
 
-<form method="post" asp-action="Edit">
+<form method="post" asp-action="Create">
     <input type="hidden" asp-for="ItemId"/>
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -32,6 +32,4 @@
 
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
-    <a class="btn btn-primary" asp-controller="Item" asp-action="List">Back to List</a>
-
 </form>

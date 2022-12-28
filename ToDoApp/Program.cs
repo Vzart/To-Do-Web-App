@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoConnection")));
-builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+builder.Services.AddSingleton<IToDoRepository, InMemoryToDoRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

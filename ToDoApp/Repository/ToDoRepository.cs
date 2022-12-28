@@ -27,19 +27,24 @@ public class ToDoRepository : IToDoRepository
         return _items.ToDoItems.Find(id);
     }
 
-    public ToDoItem CreateNewItem(ToDoItem newItem)
+    public void CreateNewItem(ToDoItem newItem)
     {
         _items.Add(newItem);
-        return newItem;
     }
 
-    public ToDoItem Update(ToDoItem updateItem)
+    public void Update(ToDoItem updateItem)
     {
-        var entity = _items.Attach(updateItem);
-        entity.State = EntityState.Modified;
-        return updateItem;
+        throw new NotImplementedException();
     }
 
+    public void Delete(int id)
+    {
+        var item = GetById(id);
+        if (item is not null)
+        {
+            _items.Remove(item);
+        }
+    }
     public int Commit()
     {
         return _items.SaveChanges();
