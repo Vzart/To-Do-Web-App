@@ -5,36 +5,33 @@ namespace ToDoApp.Repository;
 
 public class ToDoRepository : IToDoRepository
 {
-    private readonly AppDbContext _items;
+    private readonly AppDbContext _db;
 
     public ToDoRepository(AppDbContext items)
     {
-        _items = items;
+        _db = items;
     }
     
     public IEnumerable<ToDoItem> GetItemByName(string name)
     {
-        var query = from td in _items.ToDoItems
-            where td.Name.StartsWith(name) || string.IsNullOrEmpty(name)
-            orderby td.Name
-            select td;
-
-        return query;
+        if (string.IsNullOrEmpty(name)) return _db.ToDoItems;
+        return _db.ToDoItems.Where(x => x.Name.ToLower().Contains(name.ToLower()));
     }
 
     public ToDoItem GetById(int id)
     {
-        return _items.ToDoItems.Find(id);
+        return _db.ToDoItems.Find(id);
     }
 
     public void CreateNewItem(ToDoItem newItem)
     {
-        _items.Add(newItem);
+        _db.Add(newItem);
     }
 
     public void Update(ToDoItem updateItem)
     {
-        throw new NotImplementedException();
+        var entry = _db.Entry(updateItem);
+        entry.State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -42,11 +39,11 @@ public class ToDoRepository : IToDoRepository
         var item = GetById(id);
         if (item is not null)
         {
-            _items.Remove(item);
+            _db.Remove(item);
         }
     }
     public int Commit()
     {
-        return _items.SaveChanges();
+        return _db.SaveChanges();
     }
 }
